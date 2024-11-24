@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "course-viz-python"
+version = "0.1.0"
+description = ""
+authors = ["FredericLoge <frederic.logemunerel@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+shiny = "^1.2.1"
+faicons = "^0.2.2"
+shinywidgets = "^0.3.4"
+plotly = "^5.24.1"
+pandas = "^2.2.3"
+ridgeplot = "^0.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
