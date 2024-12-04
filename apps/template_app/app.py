@@ -3,10 +3,12 @@ import faicons as fa
 import plotly.express as px
 from shinywidgets import output_widget, render_plotly
 from shiny import App, reactive, render, ui
-
+import os
+from pathlib import Path
 # bill_rng = (min(tips.total_bill), max(tips.total_bill))
 
-df = pd.read_csv('../../data/star_wars_characters.csv')
+root_path = "/Users/frederic-loge/Documents/perso/GitHubPerso/course-viz-python/"
+df = pd.read_csv(os.path.join(root_path, 'data/star_wars_characters.csv'))
 
 ICONS = {
     "user": fa.icon_svg("user", "regular"),
@@ -37,14 +39,19 @@ app_ui = ui.page_sidebar(
         # ui.input_action_button(),
         open="desktop",
     ),
-    ui.layout_columns(
+    # ui.layout_columns(
         ui.card(
             ui.card_header("General information"), 
             ui.output_data_frame("table"), 
             full_screen=True
-        )
-    ),
-    ui.include_css("styles.css"),
+        ),
+        ui.card(
+          ui.card_header("Scatterplot"),
+          output_widget("scatterplot"),
+          full_screen=True
+        ),
+    # ),
+    ui.include_css(os.path.join(os.path.dirname(__file__), 'styles.css')),
     title="Bare app",
     fillable=True,
 )
@@ -55,5 +62,26 @@ def server(input, output, session):
     @render.data_frame
     def table():
       return render.DataGrid(df)
+    
+    @render_plotly
+    def scatterplot():
+        # color = input.scatter_color()
+        fig = px.scatter(
+            df,
+            x="height",
+            y="weight",
+            color="gender",
+            hover_name="name",
+            hover_data=["height", "weight"],
+            trendline="lowess",
+             labels={
+                     "gender": "Gender",
+                     "height": "Height (m)",
+                     "weight": "Weight (kg)"
+                 },
+                title="Scatterplot of weight against height"
+        )
+        ## fig.update_traces(hovertemplate="%{name}%")
+        return fig
 
 app = App(app_ui, server)
