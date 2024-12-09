@@ -19,6 +19,10 @@ That being said:
 - for interactive plots, we will focus on `plotly` (maps included although `folium` is nice as well)
 - for network representation, we will look into the `pyvis` library
 
+Go to `graphs.ipynb`
+
 ## WebApp/Dashboard
 
 In python, many options are available: `streamlit`, `Dash`, `Flask`, `Bokeh`, `Panel`, ... and yet we shall be using `shiny` today :party: 
+
+Run `app.py`
